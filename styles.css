@@ -1,3 +1,50 @@
 body {
   background-color: pink;
 }
+
+#container {
+  text-align: center;
+  margin: auto;
+  width: 80%;
+  min-width: 500px;
+}
+
+#board {
+  margin: auto;
+  width: 70%;
+  min-width: 400px;
+  font-size: 34px;
+}
+
+#game-button {
+  text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
+  width: 70px;
+  border-radius: 5px;
+}
+
+#game-info {
+  text-align: center;
+  margin: auto;
+  margin-bottom: 15px;
+}
+
+.row {
+  text-align: center;
+  margin: auto;
+  width: 80%;
+}
+
+.square {
+  margin: auto;
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: white;
+  display: inline-block;
+}
