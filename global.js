@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 // Please implement exercise logic here
 
 /**
@@ -10,7 +11,7 @@ const P1EMOJI = '❌';
 const P2EMOJI = '⭕';
 const TIMERMS = 500;
 
-const gameBoardSize = 3;
+let gameBoardSize;
 const gameBoard = [];
 
 let canPlayerClick = true;
@@ -27,11 +28,15 @@ const infoDiv = document.createElement('div');
 infoDiv.id = 'game-info';
 infoDiv.innerText = 'Press to play!';
 
+const userInput = document.createElement('input');
+userInput.className = 'user-input';
+userInput.placeholder = 'Board Size?';
+
 const gameButton = document.createElement('button');
 gameButton.id = 'game-button';
 gameButton.innerText = 'Start!';
 
-gameContainer.append(gameButton, infoDiv);
+gameContainer.append(userInput, gameButton, infoDiv);
 document.body.append(gameContainer);
 
 /**
@@ -96,6 +101,15 @@ const winCheck = () => {
   return false;
 };
 
+const drawCheck = () => {
+  for (let i = 0; i < gameBoardSize; i += 1) {
+    for (let j = 0; j < gameBoardSize; j += 1) {
+      if (gameBoard[i][j] === '') { return false; }
+    }
+  }
+  return true;
+};
+
 /**
  * =============================
  * HANDLER/CALLBACK FUNCTIONS
@@ -132,6 +146,16 @@ const handleClick = (row, column) => {
     canPlayerClick = false;
     updateGameInfo(`${currentPlayer} Won! Reset to play again`);
     gameButton.disabled = false;
+    userInput.disabled = false;
+    gameButton.innerText = 'Reset!';
+    return;
+  }
+
+  if (drawCheck()) {
+    canPlayerClick = false;
+    updateGameInfo('It\'s a draw! Reset to play again');
+    gameButton.disabled = false;
+    userInput.disabled = false;
     gameButton.innerText = 'Reset!';
     return;
   }
@@ -152,10 +176,10 @@ const handleClick = (row, column) => {
 const buildBoardGUI = () => {
   boardDiv.innerHTML = '';
 
-  for (let i = 0; i < gameBoard.length; i += 1) {
+  for (let i = 0; i < gameBoardSize; i += 1) {
     const rowDiv = document.createElement('div');
     rowDiv.className = 'row';
-    for (let j = 0; j < gameBoard[i].length; j += 1) {
+    for (let j = 0; j < gameBoardSize; j += 1) {
       const squareDiv = document.createElement('div');
       squareDiv.className = 'square';
       squareDiv.innerText = gameBoard[i][j];
@@ -173,9 +197,13 @@ const updateGameInfo = (message) => { infoDiv.innerText = message; };
  * Initializes game
  */
 const initGame = () => {
+  if (isNaN(Number(userInput.value))) { updateGameInfo('Not a valid number');
+    return; }
+  gameBoardSize = Number(userInput.value);
   buildBoard();
   buildBoardGUI();
   gameButton.disabled = true;
+  userInput.disabled = true;
   canPlayerClick = true;
   updateGameInfo(`${currentPlayer} to start!`);
 };
