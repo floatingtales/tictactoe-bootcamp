@@ -197,7 +197,7 @@ const updateGameInfo = (message) => { infoDiv.innerText = message; };
  * Initializes game
  */
 const initGame = () => {
-  if (isNaN(Number(userInput.value))) { updateGameInfo('Not a valid number');
+  if (Number.isNaN(Number(userInput.value))) { updateGameInfo('Not a valid number');
     return; }
   gameBoardSize = Number(userInput.value);
   buildBoard();
